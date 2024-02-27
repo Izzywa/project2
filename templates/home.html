@@ -1,0 +1,138 @@
+{% extends "layout.html" %}
+{% block script %}
+<script>
+    $(document).ready(function() {
+        let title = document.getElementById('title');
+
+        window.addEventListener('scroll', () => {
+            let value = window.scrollY;
+
+            title.style.marginTop = value * -1.5 + 'px';
+        });
+
+        let home = $('.home');
+        nav_toggle(home);
+
+        clock('none');
+
+        const now = new Date();
+        const times = {{times|tojson}};
+        const index = times.indexOf('golden_hour');
+        if (index > -1) { 
+        times.splice(index, 1); 
+        }
+        const today = {{today|tojson}};
+        const today_sun = [];
+
+        for (let i = 0; i < times.length; i++) {
+            today_sun.push(Date.parse(today[times[i]]) + ' ' + times[i]);
+        }
+        today_sun.sort();
+
+
+        setInterval(() => {
+        let time = new Date();
+
+        for (let i = 0; i < today_sun.length; i++) {
+            if (Date.parse(time) > today_sun[i].split(' ')[0]) {
+                if (today_sun[i].split(' ')[1] == 'last_light') {
+                    toggle_sky('last_light');
+                    break;
+                }
+                continue;
+            }
+            else {
+                if (today_sun[i].split(' ')[1] == 'first_light') {
+                    toggle_sky('last_light');
+                    break;
+                }
+                else {
+                    toggle_sky(today_sun[i - 1].split(' ')[1]);
+                    break;
+                }
+            }
+        }
+
+        }, 1000); 
+
+        });
+
+        
+
+</script>
+
+{% endblock %}
+{% block title %}
+Home
+{% endblock %}
+{% block content %}
+<div class="hero mb-5">
+    <div class="container hero-text text-center">
+        <h1 id="title">SUNLIGHT</h1>
+        <figure>
+            <blockquote class="blockquote">
+              <p>{{ quote.quote}}</p>
+            </blockquote>
+            <figcaption class="blockquote-footer">
+              {{ quote.name }}
+            </figcaption>
+          </figure>
+    </div>
+</div>
+<div class="container description my-5">
+    <h1>DESCRIPTION</h1>
+    <p>
+        The sun rises and sets everyday that it becomes a routine that is insignificant to most. 
+        But it is also a warm and comforting reminder that a new and bright day will come tomorrow.
+    </p>
+    <p>
+        With SUNLIGHT, you can get the time for the sunrise and sunset to plan your next outing or travel, catch the time best for photography, and schedule your agricultural work. 
+        Get to know when it gets dark, when it gets bright, or the time with the best ligthing to set the mood and enjoy the rest of the day.
+    </p>
+    <p>
+        Could not go outside to bask in the sun? No worries, the clock background below changes according to the sunrise and sunset of the day. 
+    </p>
+    </div>
+<div class="container2">
+    <div class="sky"></div>
+    <div class="sky2"></div>
+    <div class="sunmoon">
+        <span class="sun"></span>
+    </div>
+    <div class="container clock-container my-5">
+        <div class="clock container">
+            <span id="hrs">00</span>
+            <span>:</span>
+            <span id="min">00</span>
+            <span>:</span>
+            <span id="sec">00</span>
+        </div>
+    </div>
+</div>
+<div class="container3 container my-5">
+    <h1>GET THE TIME</h1>
+    <p>Want to catch the next sunrise or sunset?</p>
+    <p>Submit either your current location or any city you are interested in to get the time to the next sunset, sunrise, and everything in between.</p>
+    <div class="row g-5 align-items-center row-cols-1 row-cols-md-2">
+        <form action="/sun_time" method="post" class="col p-3 justify-content-center"> 
+            <input name="coordinate" value="{{ coordinate[0] }}" type="hidden">
+            <input name="coordinate" value="{{ coordinate[1] }}" type="hidden">
+            <input type="submit" value="Current Location" class="col-8 text-center">
+        </form>
+        <form action="/sun_time" method="post" class="col p-3">
+            <div class="row justify-content-center">
+                <select name="country" onchange="cities(this.value)" class="country col-10">
+                    <option disabled selected value="">COUNTRY</option>
+                    {% for country in countries%}
+                    <option value="{{ country.id }}">{{ country.name }}</option>
+                    {% endfor %}
+                </select>
+                <select name="city" id="city" class="city col-10">
+                </select>
+                <input type="submit" value="Submit Location" class="col-6 text-center">
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

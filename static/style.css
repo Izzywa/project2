@@ -1,0 +1,797 @@
+html {
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    margin: 0;
+    font-family: Georgia, serif;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+html, body {
+    width: 100vw;
+    height: 100%;
+}
+body {
+    background-color: #0D0D0D;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+.wrapper {
+    overflow: hidden;
+    position: relative;
+}
+
+header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 10px;
+    display: flex;
+    align-items: center;
+    z-index: 50;
+    justify-content: space-between;
+}
+.bars {
+    position: absolute;
+    top: 20px;
+    left: 80vw;
+}
+
+.bar1, .bar2, .bar3 {
+    width: 35px;
+    height: 5px;
+    background-color: #333;
+    margin: 6px 0;
+    transition: 0.4s;
+  }
+.change .bar1 {
+transform: translate(0, 11px) rotate(-45deg);
+}
+
+.change .bar2 {opacity: 0;}
+
+.change .bar3 {
+transform: translate(0, -11px) rotate(45deg);
+}
+.navbtn a {
+    display: inline-block;
+    text-decoration: none;
+    color: rgb(89, 34, 70);
+    padding: 10px;
+    border-radius: 20px;   
+    margin: 2px;
+    font-weight: 600;
+}
+.navbtn {
+    animation-name: navslideout;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    transition: all 0.5s ease;
+}
+@keyframes navslideout {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-120%);
+    }
+}
+.navbtn.responsive {
+    display: block;
+    animation-name: navslidein;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+@keyframes navslidein {
+    0% {
+        transform: translateX(-100%);
+    }
+    100%{
+        transform: translateX(0);
+    }
+}
+.navbtn a.active, .navbtn a:hover {
+    background-color: rgb(89, 34, 70);
+    color: #F2E5D5;
+}
+
+.hero {
+    background-image: linear-gradient(rgb(89, 34, 70, 0.5), rgb(129, 159, 166, 0.5)), url(/static/sunrise_over_mountain.jpeg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero-text h1 {
+    color: #fff;
+    text-shadow: 0 5px 10px rgba(0, 0, 0, 1);
+    mix-blend-mode: overlay;
+    font-size: 3rem;
+}
+
+.container h1, .container p {
+    color: #F2E5D5;
+}
+
+.container2 {
+    height: 40vh;
+    position: relative;
+    transition: 1s;
+    background: #0D0D0D;
+    animation-fill-mode: forwards;
+}
+
+.clock-container {
+    height: 40vh;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: block;
+}
+
+.sky, .sky2 {
+    height: 40vh;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    animation-fill-mode: forwards;
+    animation-duration: 5s;
+}
+.box:nth-of-type(1) {
+    height: 30vh;
+    margin-top: 60px;
+    display: block;
+}
+.box {
+    height: 80vh;
+    width: 100%;
+    border-radius: 10px;
+    padding: 5px;
+    margin: 30px auto;
+    transform: scale(0.5, 0.5);
+    transition: 1.5s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.innerbox {
+    height: 70vh;
+    width: 100%;
+    border-radius: 10px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin: 0;
+
+}
+.box:nth-of-type(2) .innerbox {
+    background-image: linear-gradient(rgb(89, 34, 70, 0.3), rgb(129, 159, 166, 0.3)), url(/static/sun_over_clouds.jpg);
+}
+.box:nth-of-type(3) .innerbox {
+    background-image: linear-gradient(rgb(129, 159, 166, 0.4), rgb(129, 159, 166, 0)), url(/static/first_light_forest.jpeg);
+}
+.box:nth-of-type(4) .innerbox {
+    background-image: linear-gradient(rgb(129, 159, 166, 0.3),#D9695F30), url(/static/dawn_flowers.jpeg);
+}
+.box:nth-of-type(5) .innerbox {
+    background-image: linear-gradient(rgb(129, 159, 166, 0.5),#F2870550), url(/static/sunrise.jpeg);
+}
+.box:nth-of-type(6) .innerbox {
+    background-image: linear-gradient(rgb(129, 159, 166, 0.5), rgb(129, 159, 166, 0.5)), url(/static/solar-noon_mountain.jpg);
+}
+.box:nth-of-type(7) .innerbox {
+    background-image: linear-gradient(rgb(129, 159, 166, 0.2), rgb(129, 159, 166, 0.2)), url(/static/golden_hour.jpeg);
+}
+.box:nth-of-type(8) .innerbox {
+    background-image: linear-gradient(#D9695F20,#73496020), url(/static/sunset2.jpeg);
+}
+.box:nth-of-type(9) .innerbox {
+    background-image: linear-gradient(#19343B30, #73496030), url(/static/dusk.jpeg);
+}
+.box:nth-of-type(10) .innerbox {
+    background-image: linear-gradient(#73496000,#73496030), url(/static/last_light.jpeg);
+}
+.show {
+   transform: scale(1, 1);
+   transition: all 1.5s;
+}
+.card-container {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}
+.time-card {
+    height: 50%;
+}
+.info-card {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    background-color:#73496050;
+    z-index: 1;
+    backdrop-filter: blur(40px);
+    height: 50%;
+}
+.info-card h2 {
+    color: #fff;
+    text-shadow: 0 5px 10px rgba(0, 0, 0, 1);
+    mix-blend-mode: overlay;
+    font-size: 2em;
+}
+.info-card blockquote p {
+    color: #0D0D0D;
+    padding: 5px, 20px;
+    font-size: 0.8em;
+}
+figcaption a {
+    text-decoration: none;
+    color: #F2E5D5;
+}
+
+@keyframes first_light {
+    0% {
+        background: linear-gradient(rgb(129, 159, 166, 0.5), rgb(129, 159, 166, 0));
+        opacity: 0;
+    }
+    100% {
+        background: linear-gradient(rgb(129, 159, 166, 0.5), rgb(129, 159, 166, 0));
+        opacity: 1;
+    }
+}
+@keyframes bg_first_light {
+    0% {
+        background: linear-gradient(#73496000,#73496040);
+        opacity: 1;
+    }
+    100% {
+        background: linear-gradient(#73496000,#73496040);
+        opacity: 0;
+    }
+}
+@keyframes dawn {
+    0% {
+        background: linear-gradient(rgb(129, 159, 166, 0.5), rgb(129, 159, 166, 0));
+        opacity: 1;
+    }
+    100% {
+        background: linear-gradient(rgb(129, 159, 166, 0.5), rgb(129, 159, 166, 0));
+        opacity: 0;
+    }
+}
+@keyframes bg_dawn {
+    0% {
+        background: linear-gradient(rgb(129, 159, 166, 0.5),#D9695F);
+        opacity: 0;
+    }
+    100% {
+        background: linear-gradient(rgb(129, 159, 166, 0.5),#D9695F);
+        opacity: 1;
+    }
+}
+@keyframes bg_sunrise {
+    0% {
+        background: linear-gradient(rgb(129, 159, 166, 0.5),#D9695F);
+        opacity: 1;
+    }
+    100% {
+        background: linear-gradient(rgb(129, 159, 166, 0.5),#D9695F);
+        opacity: 0;
+    }
+}
+@keyframes sunrise {
+    0% {
+        background: linear-gradient(rgb(129, 159, 166),#F28705);
+        opacity: 0;
+    }
+    100% {
+        background: linear-gradient(rgb(129, 159, 166),#F28705);
+        opacity: 1;
+    }
+}
+@keyframes solar_noon {
+    0% {
+        background: linear-gradient(rgb(129, 159, 166),#F28705);
+        opacity: 1;
+    }
+    100% {
+        background: linear-gradient(rgb(129, 159, 166),#F28705);
+        opacity: 0;
+    }
+}
+@keyframes bg_solar_noon {
+    100% {
+        background: rgb(129, 159, 166);
+    }
+}
+@keyframes sunset {
+    0% {
+        background: linear-gradient(#D9695F,#734960);
+        opacity: 0;
+    }
+    100% {
+        background: linear-gradient(#D9695F,#734960);
+        opacity: 1;
+    }
+}
+@keyframes bg_sunset {
+    0% {
+        background: rgb(129, 159, 166);
+    }
+    100% {
+        background: rgb(129, 159, 166,0);
+    }
+}
+@keyframes dusk {
+    0% {
+        background: linear-gradient(#D9695F,#734960);
+        opacity: 1;
+    }
+    100% {
+        background: linear-gradient(#D9695F,#734960);
+        opacity: 0;
+    }
+}
+@keyframes bg_dusk {
+    0% {
+        background: linear-gradient(#19343B, #73496050);
+        opacity: 0;
+    }
+    100% {
+        background: linear-gradient(#19343B, #73496050);
+        opacity: 1;
+    }
+}
+@keyframes last_light {
+    0% {
+        background: linear-gradient(#73496000,#73496050);
+        opacity: 0;
+    }
+    100% {
+        background: linear-gradient(#73496000,#73496050);
+        opacity: 1;
+    }
+}
+@keyframes bg_last_light {
+    0% {
+        background: linear-gradient(#19343B, #73496050);
+        opacity: 1;
+    }
+    100% {
+        background: linear-gradient(#19343B, #73496050);
+        opacity: 0;
+    }
+}
+
+.sunmoon {
+    overflow: hidden;
+    height: 40vh;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.sun {
+    content: '';
+    background: linear-gradient(45deg, #D9626B, #F2E5D5);
+    position: absolute;
+    z-index: 0;
+    border-radius: 50%;
+    height: 100px;
+    flex: 0 0 100px;
+    width: 100px;
+    transform: translate(-100%, 0);
+    animation-fill-mode: forwards;
+    animation-duration: 6.5s;
+}
+
+@keyframes sun_sunrise
+{
+    0% {
+        transform: translate(-100%, 5vh);
+    }
+    100% {
+        transform: translate(10vw, 0);
+    }
+    }
+@keyframes sun_solar_noon
+{
+    0% {
+        transform: translate(10vw, 0);
+    }
+    100% {
+        transform: translate(43vw, -5vh);
+    }
+}
+@keyframes sun_sunset
+{
+    0% {
+        transform: translate(43vw, -5vh);
+    }
+    100% {
+        transform: translate(80vw, 0);
+    }
+}
+@keyframes sun_dusk
+{
+    0% {
+        transform: translate(80vw, 0);
+    }
+    100% {
+        transform: translate(100vw, 5vh);
+    }
+}
+
+.clock, .clock2 {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    backdrop-filter: blur(40px);
+    border-radius: 10px;
+}
+
+.clock {
+    background-color:#73496080;
+}
+.clock2 {
+    background-color: #734960;
+}
+
+.clock span, .clock2 span {
+    width: 150px;
+    display: inline-block;
+    text-align: center;
+    position: relative;
+    color: #0D0D0D;
+    font-size: 3rem;
+    transition: color 1s;
+}
+
+.clock2 p {
+    color: #0D0D0D;   
+}
+
+.flip-box-back span:nth-child(even) {
+    font-size: 1rem;
+}
+
+.container3 {
+    position: relative;
+    top: 50px;
+    color:rgb(129, 159, 166);
+}
+.col {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+footer {
+    margin-top: 80px;
+    padding: 15px;
+    height: 100px;
+
+}
+footer div {
+    border-top: 2px solid rgb(129, 159, 166);
+    height: 100%;
+    width: 100%;
+    padding-top: 10px;
+    color: gray;
+}
+
+select {
+    height: 5vh;
+    width: 80vw;
+    margin: 5px;
+    padding: 5px;
+    border-radius: 20px;
+    border: 0.5px solid #734960;
+    background: rgb(129, 159, 166, 0);
+    color: #F2E5D5;
+}
+
+input[type=submit] {
+    background: #F2E5D5;
+    height: 5vh;
+    border-radius: 20px;
+    border: #F2E5D5;
+    padding: 5px 15px;
+}
+.flip-box {
+    height: 30%;
+    width: 70%;
+    perspective: 1000px;
+}
+.flip-box-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 1s;
+    transform-style: preserve-3d;
+}
+.flip-box-front, .flip-box-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.flip-box-front {
+    background-color: transparent;
+    border-top: 1px solid #0D0D0D;
+    border-bottom: 1px solid #0D0D0D;
+}
+.flip-box-back {
+    border-top: 1px solid #F2E5D5;
+    border-bottom: 1px solid #F2E5D5;
+    transform: rotateY(180deg);
+}
+.flip-box-inner.is-flipped {
+    transform: rotateY(180deg);
+}
+.flip-box-front span:not(:last-child), .flip-box-back span {
+    font-size: 3.5em;
+    color: #F2E5D5;
+    text-shadow: 0 5px -10px rgba(0,0,0, 1);
+}
+.flip-box-front span:nth-child(even), .flip-box-back span:nth-child(even) {
+    color: #0D0D0D;
+}
+.flip-box-front::before {
+    content: 'TIME';
+    position: absolute;
+    top: -1em;
+    background-color: #0D0D0D;
+    color: #F2E5D5;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-size: 1em;
+    z-index: 100;
+}
+.flip-box-back::before {
+    content: 'COUNTDOWN';
+    position: absolute;
+    top: -1em;
+    color: #0D0D0D;
+    background-color: #F2E5D5;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-size: 1em;
+    z-index: 100;
+}
+.flip-box-front::after, span.date {
+    position: absolute;
+    bottom: -1.5em;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-size: 0.5em;
+    z-index: 100;
+}
+span.date {
+    left: 0;
+}
+.box:not(:nth-child(2)) .flip-box-front::after {
+    right: 0;
+    background-color: #0D0D0D;
+    color: #F2E5D5;
+    content: 'click to change';
+    transition: all 0.5s ease;
+}
+.flip-box-back::after {
+    content: 'click to change';
+    position: absolute;
+    bottom: -1.5em;
+    right: 0;
+    color: #0D0D0D;
+    background-color: #F2E5D5;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-size: 0.5em;
+    transition: all 0.5s ease;
+    z-index: 100;
+}
+.flip-box-front:hover:after, .flip-box-back:hover:after {
+    letter-spacing: 3px;
+}
+@media (min-width: 475px) {
+
+    .container {
+        max-width: 475px;
+    }
+    .hero-text h1 {
+        font-size:5rem;
+    }
+    .navigation a {
+        font-size: small;
+    }
+    .description h1 {
+        font-weight: 300;
+    }
+    .hero-text figure {
+        font-size: 12px;
+    }
+    .clock span, .clock2 span {
+        font-size: 4rem;
+    }
+    .sun {
+        height: 110px;
+        flex: 0 0 110px;
+        width: 110px;
+    }
+}
+
+@media (min-width: 600px) {
+
+    .container {
+        max-width: 600px;
+    }
+    .hero-text h1 {
+        font-size: 5rem;
+    }
+    .navigation a {
+        font-size: medium;
+    }
+    .description h1 {
+        font-weight: 300;
+    }
+    .hero-text figure {
+        font-size: 8px;
+    }
+    .clock span, .clock2 span {
+        font-size: 4rem;
+    }
+    .sun {
+        height: 120px;
+        flex: 0 0 120px;
+        width: 120px;
+    }
+
+}
+
+@media (min-width: 768px) {
+
+    .container {
+        max-width: 768px;
+    }
+    .hero-text h1 {
+        font-size: 6rem;
+    }
+    .navigation a {
+        font-size: large;
+    }
+    .description h1 {
+        font-weight: 400;
+    }
+    .hero-text figure {
+        font-size: 15px;
+    }
+    .clock span, .clock2 span {
+        font-size: 5rem;
+    }
+    .sun {
+        height: 130px;
+        flex: 0 0 130px;
+        width: 130px;
+    }
+    .bars {
+        display: none;
+    }
+    .navbtn {
+        animation-name: none;
+    }
+    .info-card {
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+        height: 100%;
+    }
+    .time-card {
+        height: 100%;
+    }
+    .info-card .blockquote {
+        font-size: 20px;
+    }
+}
+
+@media (min-width: 1024px) {
+    /* Lg */
+    .container {
+        max-width: 1024px;
+    }
+    .hero-text h1 {
+        font-size: 8rem;
+    }
+    .navigation a {
+        font-size: large;
+    }
+    .description h1 {
+        font-weight: 400;
+    }
+    .hero-text figure {
+        font-size: 20px;
+    }
+    .clock span, .clock2 span {
+        font-size: 7rem;
+    }
+    .sun {
+        height: 140px;
+        flex: 0 0 140px;
+        width: 140px;
+    }
+
+}
+
+@media (min-width: 1028px) {
+    /*xL*/
+    .container {
+        max-width: 1028px;
+    }
+    .hero-text h1 {
+        font-size: 9rem;
+    }
+    .navigation a {
+        font-size: large;
+    }
+    .description h1 {
+        font-weight: 500;
+    }
+    .hero-text figure {
+        font-size: 20px;
+    }
+    .clock span, .clock2 span {
+        font-size: 8rem;
+    }
+    .sun {
+        height: 150px;
+        flex: 0 0 150px;
+        width: 150px;
+    }
+
+}
+
+@media (min-width: 1536px) {
+    /*2xL*/
+    .container {
+        max-width: 1535px;
+    }
+    .hero-text h1 {
+        font-size: 10rem;
+    }
+    .navigation a {
+        font-size: large;
+    }
+    .description h1 {
+        font-weight: 600;
+    }
+    .hero-text figure {
+        font-size: 20px;
+    }
+    .clock span, .clock2 span {
+        font-size: 9rem;
+    }
+
+    .sun {
+        height: 150px;
+        flex: 0 0 150px;
+        width: 150px;
+    }
+
+}

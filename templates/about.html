@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% block script %}
+<script>
+    $(document).ready(function() {
+        let about = $('.about');
+        nav_toggle(about);
+        
+        let date = document.getElementById('date');
+
+        clock('none', date);
+    });
+</script>
+{% endblock %}
+{% block title %}
+About
+{% endblock %}
+{% block content %}
+<div class="container mt-5 pt-5">
+    <h1>TITLE: SUNLIGHT</h1>
+    <h1>NAME: IZZATUL NAJWA ISMAIL</h1>
+    <h1>GITHUB: Izzywa</h1>
+    <h1>EDX: izzatulismail</h1>
+    <h1>CITY: JOHOR BAHRU</h1>
+    <h1>COUNTRY: MALAYSIA</h1>
+    <div class="currenttime">
+        <h1>CURRENT DATE AND TIME</h1>
+        <h1 id="date">yyyy/mm/dd</h1>
+        <div class="clock2 container">
+            <span id="hrs">00</span>
+            <span>:</span>
+            <span id="min">00</span>
+            <span>:</span>
+            <span id="sec">00</span>
+        </div>
+    </div>
+</div>
+{% endblock %}

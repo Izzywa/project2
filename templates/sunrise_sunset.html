@@ -1,0 +1,400 @@
+{% extends "layout.html" %}
+{% block script %}
+<script>
+    $('document').ready(function() {
+        observer();
+
+        clock({{ utc_offset|tojson }});
+
+        const suntime_array = {{ coor_sun|tojson }};
+        let now = calctime({{ utc_offset|tojson }});
+        const times = suntime_array['times'];
+
+        const next_sun = {};
+        for (let i = 0; i < times.length; i++) {
+            next_sun[times[i]] = Date.parse(suntime_array['next'][times[i]]);
+        }
+
+
+        suntime_time(suntime_array['next'], now, 'day_length');
+        for (let i = 0; i < times.length; i++) {
+            suntime_time(suntime_array['next'], now, times[i]);
+            countdown(next_sun, {{ utc_offset|tojson }}, times[i]);
+        }
+
+    });
+
+</script>
+{% endblock %}
+{% block title %}
+Sunrise Sunset
+{% endblock %}
+{% block content %}
+<div class="sun_time">
+    <div class="container box show">
+        <h1>LOCATION: {{ location }}</h1>
+        <div class="clock2 container">
+            <span id="hrs">00</span>
+            <span>:</span>
+            <span id="min">00</span>
+            <span>:</span>
+            <span id="sec">00</span>
+        </div>
+    </div>
+    <div class="container box">
+        <div class="innerbox">
+            <div class="row row-cols-1 row-cols-md-2 card-container">
+                <div class="col time-card">
+                    <div class="flip-box">
+                        <div class="flip-box-inner">
+                            <div class="flip-box-front day_length">
+                                <span class="hrs">00</span>
+                                <span>:</span>
+                                <span class="min">00</span>
+                                <span>:</span>
+                                <span class="sec">00</span>
+                                <span class="date">yyyy/mm/dd</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col info-card">
+                    <h2>DAYTIME LENGTH</h2>
+                    <blockquote class="blockquote">
+                        <p>
+                            Daytime as observed on Earth is the period of the day during which a given location experiences natural illumination from direct sunlight. 
+                        </p>
+                      </blockquote>
+                      <figcaption class="blockquote-footer">
+                        <a href="https://en.wikipedia.org/wiki/Daytime">wikipedia</a>
+                      </figcaption>
+                    </figure>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container box">
+        <div class="innerbox">
+            <div class="row row-cols-1 row-cols-md-2 card-container">
+                <div class="col time-card">
+                    <div class="flip-box">
+                        <div class="flip-box-inner" onclick="flip_card(this)">
+                            <div class="flip-box-front first_light">
+                                <span class="hrs">00</span>
+                                <span>:</span>
+                                <span class="min">00</span>
+                                <span>:</span>
+                                <span class="sec">00</span>
+                                <span class="date">yyyy/mm/dd</span>
+                            </div>
+                            <div class="flip-box-back first_light_countdown">
+                                <span class="hrs">00</span>
+                                <span>hr</span>
+                                <span class="min">00</span>
+                                <span>min</span>
+                                <span class="sec">00</span>
+                                <span>sec</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col info-card">
+                    <h2>FIRST LIGHT</h2>
+                    <blockquote class="blockquote">
+                        <p>
+                            First light is the time in the early morning when light first appears and before the sun rises.
+                        </p>
+                      </blockquote>
+                      <figcaption class="blockquote-footer">
+                        <a href="https://www.collinsdictionary.com/dictionary/english/first-light">collinsdictionary</a>
+                      </figcaption>
+                    </figure>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container box">
+        <div class="innerbox">
+            <div class="row row-cols-1 row-cols-md-2 card-container">
+                <div class="col time-card">
+                    <div class="flip-box">
+                        <div class="flip-box-inner" onclick="flip_card(this)">
+                            <div class="flip-box-front dawn">
+                                <span class="hrs">00</span>
+                                <span>:</span>
+                                <span class="min">00</span>
+                                <span>:</span>
+                                <span class="sec">00</span>
+                                <span class="date">yyyy/mm/dd</span>
+                            </div>
+                            <div class="flip-box-back dawn_countdown">
+                                <span class="hrs">00</span>
+                                <span>hr</span>
+                                <span class="min">00</span>
+                                <span>min</span>
+                                <span class="sec">00</span>
+                                <span>sec</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col info-card">
+                    <h2>DAWN</h2>
+                    <blockquote class="blockquote">
+                        <p>
+                            It is recognized by the appearance of indirect sunlight being scattered in Earth's atmosphere, when the centre of the Sun's disc has reached 18° below the observer's horizon.
+                        </p>
+                      </blockquote>
+                      <figcaption class="blockquote-footer">
+                        <a href="https://en.wikipedia.org/wiki/Dawn">wikipedia</a>
+                      </figcaption>
+                    </figure>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container box">
+        <div class="innerbox">
+            <div class="row row-cols-1 row-cols-md-2 card-container">
+                <div class="col time-card">
+                    <div class="flip-box">
+                        <div class="flip-box-inner" onclick="flip_card(this)">
+                            <div class="flip-box-front sunrise">
+                                <span class="hrs">00</span>
+                                <span>:</span>
+                                <span class="min">00</span>
+                                <span>:</span>
+                                <span class="sec">00</span>
+                                <span class="date">yyyy/mm/dd</span>
+                            </div>
+                            <div class="flip-box-back sunrise_countdown">
+                                <span class="hrs">00</span>
+                                <span>hr</span>
+                                <span class="min">00</span>
+                                <span>min</span>
+                                <span class="sec">00</span>
+                                <span>sec</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col info-card">
+                    <h2>SUNRISE</h2>
+                    <blockquote class="blockquote">
+                        <p>
+                            The time when the upper limb of the sun appears above the horizon as a result of the diurnal rotation of the earth.
+                        </p>
+                      </blockquote>
+                      <figcaption class="blockquote-footer">
+                        <a href="https://www.merriam-webster.com/dictionary/sunrise">merriam-webster</a>
+                      </figcaption>
+                    </figure>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container box">
+        <div class="innerbox">
+            <div class="row row-cols-1 row-cols-md-2 card-container">
+                <div class="col time-card">
+                    <div class="flip-box">
+                        <div class="flip-box-inner" onclick="flip_card(this)">
+                            <div class="flip-box-front solar_noon">
+                                <span class="hrs">00</span>
+                                <span>:</span>
+                                <span class="min">00</span>
+                                <span>:</span>
+                                <span class="sec">00</span>
+                                <span class="date">yyyy/mm/dd</span>
+                            </div>
+                            <div class="flip-box-back solar_noon_countdown">
+                                <span class="hrs">00</span>
+                                <span>hr</span>
+                                <span class="min">00</span>
+                                <span>min</span>
+                                <span class="sec">00</span>
+                                <span>sec</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col info-card">
+                    <h2>SOLAR NOON</h2>
+                    <blockquote class="blockquote">
+                        <p>
+                            Solar noon is the moment when the Sun passes a location's meridian and reaches its highest position in the sky. 
+                            In most cases, it doesn't happen at 12 o'clock.
+                        </p>
+                      </blockquote>
+                      <figcaption class="blockquote-footer">
+                        <a href="https://www.timeanddate.com/astronomy/solar-noon.html#:~:text=Solar%20noon%20is%20the%20moment,Sun%20at%20solar%20noon.">timeanddate</a>
+                      </figcaption>
+                    </figure>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container box">
+        <div class="innerbox">
+            <div class="row row-cols-1 row-cols-md-2 card-container">
+                <div class="col time-card">
+                    <div class="flip-box">
+                        <div class="flip-box-inner" onclick="flip_card(this)">
+                            <div class="flip-box-front golden_hour">
+                                <span class="hrs">00</span>
+                                <span>:</span>
+                                <span class="min">00</span>
+                                <span>:</span>
+                                <span class="sec">00</span>
+                                <span class="date">yyyy/mm/dd</span>
+                            </div>
+                            <div class="flip-box-back golden_hour_countdown">
+                                <span class="hrs">00</span>
+                                <span>hr</span>
+                                <span class="min">00</span>
+                                <span>min</span>
+                                <span class="sec">00</span>
+                                <span>sec</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col info-card">
+                    <h2>GOLDEN HOUR</h2>
+                    <blockquote class="blockquote">
+                        <p>
+                            In photography, the golden hour is the period of daytime shortly after sunrise or before sunset, during which daylight is redder and softer than when the sun is higher in the sky.
+                        </p>
+                      </blockquote>
+                      <figcaption class="blockquote-footer">
+                        <a href="https://en.wikipedia.org/wiki/Golden_hour_(photography)">wikipedia</a>
+                      </figcaption>
+                    </figure>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container box">
+        <div class="innerbox">
+            <div class="row row-cols-1 row-cols-md-2 card-container">
+                <div class="col time-card">
+                    <div class="flip-box">
+                        <div class="flip-box-inner" onclick="flip_card(this)">
+                            <div class="flip-box-front sunset">
+                                <span class="hrs">00</span>
+                                <span>:</span>
+                                <span class="min">00</span>
+                                <span>:</span>
+                                <span class="sec">00</span>
+                                <span class="date">yyyy/mm/dd</span>
+                            </div>
+                            <div class="flip-box-back sunset_countdown">
+                                <span class="hrs">00</span>
+                                <span>hr</span>
+                                <span class="min">00</span>
+                                <span>min</span>
+                                <span class="sec">00</span>
+                                <span>sec</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col info-card">
+                    <h2>SUNSET</h2>
+                    <blockquote class="blockquote">
+                        <p>
+                            The time of actual sunset is defined in astronomy as two minutes before the upper limb of the Sun disappears below the horizon.
+                        </p>
+                      </blockquote>
+                      <figcaption class="blockquote-footer">
+                        <a href="https://en.wikipedia.org/wiki/Sunset">wikipedia</a>
+                      </figcaption>
+                    </figure>
+                </div>
+            </div>
+        </div>        
+    </div>
+    <div class="container box">
+        <div class="innerbox">
+            <div class="row row-cols-1 row-cols-md-2 card-container">
+                <div class="col time-card">
+                    <div class="flip-box">
+                        <div class="flip-box-inner" onclick="flip_card(this)">
+                            <div class="flip-box-front dusk">
+                                <span class="hrs">00</span>
+                                <span>:</span>
+                                <span class="min">00</span>
+                                <span>:</span>
+                                <span class="sec">00</span>
+                                <span class="date">yyyy/mm/dd</span>
+                            </div>
+                            <div class="flip-box-back dusk_countdown">
+                                <span class="hrs">00</span>
+                                <span>hr</span>
+                                <span class="min">00</span>
+                                <span>min</span>
+                                <span class="sec">00</span>
+                                <span>sec</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col info-card">
+                    <h2>DUSK</h2>
+                    <blockquote class="blockquote">
+                        <p>
+                            The state or period of partial darkness between day and night; the dark part of twilight.
+                        </p>
+                      </blockquote>
+                      <figcaption class="blockquote-footer">
+                        <a href="https://www.dictionary.com/browse/dusk">dictionary.com</a>
+                      </figcaption>
+                    </figure>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container box">
+        <div class="innerbox">
+            <div class="row row-cols-1 row-cols-md-2 card-container">
+                <div class="col time-card">
+                    <div class="flip-box">
+                        <div class="flip-box-inner" onclick="flip_card(this)">
+                            <div class="flip-box-front last_light">
+                                <span class="hrs">00</span>
+                                <span>:</span>
+                                <span class="min">00</span>
+                                <span>:</span>
+                                <span class="sec">00</span>
+                                <span class="date">yyyy/mm/dd</span>
+                            </div>
+                            <div class="flip-box-back last_light_countdown">
+                                <span class="hrs">00</span>
+                                <span>hr</span>
+                                <span class="min">00</span>
+                                <span>min</span>
+                                <span class="sec">00</span>
+                                <span>sec</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col info-card">
+                    <h2>LAST LIGHT</h2>
+                    <blockquote class="blockquote">
+                        <p>
+                            Astronomical dusk, the time after sunset when the sky becomes completely dark.
+                        </p>
+                      </blockquote>
+                      <figcaption class="blockquote-footer">
+                        <a href="https://en.wikipedia.org/wiki/Last_Light#:~:text=Last%20Light%20may%20refer%20to,the%20sky%20becomes%20completely%20dark">wikipedia</a>
+                      </figcaption>
+                    </figure>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
